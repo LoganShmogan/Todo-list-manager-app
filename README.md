@@ -1,6 +1,6 @@
-# ToDoListManagerLoganYoung21349442
+# To-do list manager
 
-ToDoList Manager
+To-Do List Manager
 by Logan Young
 
 This is a basic ToDoList Manager that includes a Graphical interface ToDoList and a Command-Line Interface ToDoList. 
