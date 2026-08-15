@@ -1,48 +1,91 @@
-# To-do list manager
+# To-Do List Manager
 
-To-Do List Manager
-by Logan Young
+A basic to-do list manager by Logan Young, built in C# with .NET 7. This is a showcase/learning project, not a production application, so keep expectations at "demo" level rather than "polished product."
 
-This is a basic ToDoList Manager that includes a Graphical interface ToDoList and a Command-Line Interface ToDoList. 
-In the Command-Line Interface ToDoList users cam add/remove/veiw todolist entrys and also categories. It is right down to the basic level of a ToDoList
-with not alot of options in terms of editing and making your todo items more complex. 
-Within the Graphical interface ToDoList users can add/remove/veiw/load/save and more thier todo items. Users can create different categories and asign deffernt types of todoitems to them
-users can create a duedate and add labels. This type of todolist is much more complex and easier to use over the Command-Line Interface one. 
+The repo contains two separate apps that share the same idea (tasks, categories, and simple to-do items) but are built with different interfaces:
 
-Usage
-Within the Graphical interface ToDoList users can..
+- **CLI app** (`ToDoAppCLI`): a console app at the root of the repo. Minimal and quick to run anywhere.
+- **GUI app** (`GUI/`): a WPF desktop app with a richer feature set. Windows only.
 
-Add a ToDoItem 
-This is an item that icludes..
-- Title
-- ID
-- Description
-- Labels
-- Duedate
-- Priority
-- Category
-This item is more complex and gives users a better idea of their task
+## Features
 
-Add a TaskItem
-This icludes..
-- Title
-- ID
-- Description
-- Category
-This item is very basic and just a quick jot down of a task
+### CLI (`ToDoAppCLI`)
 
-Create a category
-this includes..
-- Title
-- ID
-Users can add their own categories or they can use the default Home/Work
+A menu driven console app. Users can:
 
-Testing
-In terms of testing I had alot of issues on the base level when creating the application/s
+- Add a task with a description and category
+- Remove a task by number
+- List all tasks
+- Add a new category
 
-GUI ToDoList
-The listveiw box was a very new item for me as when I did the Certificate in IT Essentials we just used a normal listbox. Figuring out how to make categories and
-then asign items to those categories was quite a challenge but was swiftly overcome. 
-Within the textboxs I had to error check to make sure all fields were filled out before adding the items to the listview. I started out manually
-writing "if (textbox != null || textbox2 !- null etc etc" but that was tedious and I new I could do better so I made all the textboxs into an array
-and for a foreach loop to then check if those items had informatin in them and if not to give the user an error message. 
+It is intentionally simple, with no due dates, priorities, or saving.
+
+### GUI (`GUI/`)
+
+A WPF app with a more complete feature set. Users can:
+
+- Add a **To-Do Item**, which includes a title, ID, description, labels, due date, priority, and category
+- Add a **Task Item**, a simpler entry with just a title, ID, description, and category
+- Create a **Category** with a title and ID (defaults to Home/Work, plus any custom categories)
+- Mark items as completed or remove them from the list
+- Save the current list to a text file and load it back later
+
+## Project structure
+
+```
+.
+├── Program.cs              # CLI app entry point and logic
+├── ToDoAppCLI.csproj        # CLI project file
+├── ToDoAppCLI.sln           # Solution file
+├── GUI/                     # WPF desktop app
+│   ├── MainWindow.xaml
+│   ├── MainWindow.xaml.cs
+│   └── GUI.csproj
+├── Domain Model.png         # Rough domain model diagram
+├── Dockerfile                # Container build for the CLI app
+└── .dockerignore
+```
+
+## Prerequisites
+
+- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+- Docker (optional, only needed to run the CLI app in a container)
+- Windows (only needed to build or run the GUI app, since it uses WPF)
+
+## Running the CLI locally
+
+From the repo root:
+
+```bash
+dotnet run --project ToDoAppCLI.csproj
+```
+
+This starts an interactive menu in the terminal. Follow the on-screen prompts to add tasks, remove tasks, list tasks, or add categories.
+
+## Running the GUI locally
+
+The GUI app targets `net7.0-windows` and uses WPF, so it can only be built and run on Windows:
+
+```bash
+dotnet run --project GUI/GUI.csproj
+```
+
+## Running the CLI with Docker
+
+The GUI cannot run in a container since WPF needs a Windows desktop to render. Docker support here covers the CLI app only.
+
+Build the image from the repo root:
+
+```bash
+docker build -t todo-cli .
+```
+
+Run it interactively (the `-it` flag is required since the app reads input from the terminal):
+
+```bash
+docker run -it todo-cli
+```
+
+## Notes
+
+This project was built for practice and portfolio purposes. There is no automated test suite, and the CLI and GUI apps do not share code, they are two independent implementations of a similar idea. Some rough edges (validation, error handling, styling) were left as-is to keep the project representative of an early-stage learning project rather than a finished product.

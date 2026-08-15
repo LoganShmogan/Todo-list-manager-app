@@ -1,0 +1,7 @@
+bin/
+obj/
+GUI/
+.git/
+.gitignore
+*.md
+Domain Model.png
